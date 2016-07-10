@@ -6,7 +6,8 @@ import java.util.Scanner;
 /**
  * Created by alexs on 7/6/2016.
  */
-class Game {
+class Game
+{
 
     private Player player1 = new Player();
     private Player player2 = new Player();
@@ -14,19 +15,22 @@ class Game {
     private StringBuilder input = new StringBuilder(); //default 16 chars
     private Scanner in = new Scanner(System.in);
 
-    private static void cls() {
+    private static void cls()
+    {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    private boolean letterInput() {
+    private boolean letterInput()
+    {
         setw("Digite una letra:");
         char letter = getString().toUpperCase().charAt(0);
         int index = word.indexOf(letter);
         if (index >= 0 && input.charAt(index) == letter)
             return true;
         boolean pass = false;
-        while (index >= 0) {
+        while (index >= 0)
+        {
             pass = true;
             input.setCharAt(index, letter);
             index = word.indexOf(letter, index + 1);
@@ -34,14 +38,16 @@ class Game {
         return pass;
     }
 
-    void UI() {
+    void UI()
+    {
         setw("Bienvenido al juego del ahorcado");
         setw("Ingrese el nombre del primer jugador: ");
         player1.setName(getString());
         setw("Ingrese el nombre del segundo jugador: ");
         player2.setName(getString());
         boolean turn = true; //which player goes, true is first player
-        do {
+        do
+        {
             cls();
             input.setLength(0); //clear StringBuilder
             if (turn)
@@ -53,7 +59,8 @@ class Game {
             for (int c = 0; c < word.length(); c++) //fill StringBuilder with '_'
                 input.setCharAt(c, '_');
             int attempts = 0; //maz of 7
-            while (attempts < 7) {
+            while (attempts < 7)
+            {
                 cls();
                 if (turn)
                     setw(player2.getName() + " tienes " + (7 - attempts) + " intento/s.");
@@ -62,12 +69,16 @@ class Game {
                 print(attempts);
                 if (!letterInput())
                     ++attempts;
-                if (isWinner()) {
-                    if (turn) {
+                if (isWinner())
+                {
+                    if (turn)
+                    {
                         setw("Felicidades " + player2.getName() + " has ganado.");
                         player2.setPoints(player2.getPoints() + 1);
                         save(player2); //Save points and name
-                    } else {
+                    }
+                    else
+                    {
                         setw("Felicidades " + player1.getName() + " has ganado.");
                         player1.setPoints(player1.getPoints() + 1);
                         save(player1); //Save points and name
@@ -75,7 +86,8 @@ class Game {
                     in.nextLine();
                     break;
                 }
-                if (attempts == 7) {
+                if (attempts == 7)
+                {
                     cls();
                     setw("Has PERDIDO!");
                     print(attempts);
@@ -86,8 +98,10 @@ class Game {
         } while (option());
     }
 
-    private void print(int number) {
-        switch (number) {
+    private void print(int number)
+    {
+        switch (number)
+        {
             case 0:
                 System.out.println();
                 System.out.println();
@@ -158,33 +172,41 @@ class Game {
         System.out.println();
     }
 
-    private boolean isWinner() {
+    private boolean isWinner()
+    {
         return Objects.equals(word, input.toString());
     }
 
-    private boolean option() {
+    private boolean option()
+    {
         System.out.println("Desea continuar, SI o NO?: ");
         return getString().toUpperCase().charAt(0) == 'S';
     }
 
-    private void setw(String str) {
+    private void setw(String str)
+    {
         int pos = (80 - str.length()) / 2;
         for (int i = 0; i < pos; i++)
             System.out.print(' ');
         System.out.println(str);
     }
 
-    private void save(Player p) {
-        try (FileWriter file = new FileWriter(p.getName() + ".txt", true)) {
+    private void save(Player p)
+    {
+        try (FileWriter file = new FileWriter(p.getName() + ".txt", true))
+        {
             file.write("Nombre: " + p.getName() + ", Palabra: " + word + ", Puntaje: " + Integer.toString(p.getPoints()) + "\r\n");
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
 
-    private String getString(){
+    private String getString()
+    {
         String line = in.nextLine();
-        if(line.isEmpty())
+        if (line.isEmpty())
             return getString();
         return line;
     }

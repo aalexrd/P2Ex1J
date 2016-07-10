@@ -1,24 +1,29 @@
 /**
  * Created by alexs on 7/6/2016.
  */
-class Player {
+class Player
+{
 
     private String name = "Default";
     private int points;
 
-    String getName() {
+    String getName()
+    {
         return name;
     }
 
-    void setName(String name) {
+    void setName(String name)
+    {
         this.name = name;
     }
 
-    int getPoints() {
+    int getPoints()
+    {
         return points;
     }
 
-    void setPoints(int points) {
+    void setPoints(int points)
+    {
         this.points = points;
     }
 }
